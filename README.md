@@ -5,11 +5,11 @@ This repository contains my daily classwork, assignments, tests, and practice pr
 ## Folder Structure
 
 - `FBS/C/` — All C language programs including:
-  - Basic programs (sum, swap, average, etc.)
+  - Basic programs 
   - Conditional statements
   - Loop patterns
   - Assignments and test questions
-  - Hardcoded input versions for reference
+  - 
 
 ##  Purpose
 
