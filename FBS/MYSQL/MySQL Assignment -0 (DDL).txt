@@ -1,0 +1,83 @@
+1. Customer
+CREATE TABLE Customer (
+    customer_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phone VARCHAR(15),
+    address VARCHAR(100)
+);
+
+2. Room Managemnt
+ 
+CREATE TABLE Room (
+    room_id INT AUTO_INCREMENT PRIMARY KEY,
+    room_type VARCHAR(20) CHECK (room_type IN ('Basic','Luxury')),
+    rent DECIMAL(10,2) NOT NULL,
+    status VARCHAR(20) DEFAULT 'Available'
+);
+
+CREATE TABLE Booking (
+    booking_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT,
+    room_id INT,
+    check_in DATE,
+    check_out DATE,
+    total_amount DECIMAL(10,2),
+    FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
+    FOREIGN KEY (room_id) REFERENCES Room(room_id)
+);
+
+
+3.Servise Managemnt
+
+-- Food Menu
+CREATE TABLE FoodMenu (
+    food_id INT AUTO_INCREMENT PRIMARY KEY,
+    food_name VARCHAR(50),
+    price DECIMAL(10,2)
+);
+
+-- Food Order
+CREATE TABLE FoodOrder (
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
+    booking_id INT,
+    food_id INT,
+    quantity INT,
+    FOREIGN KEY (booking_id) REFERENCES Booking(booking_id),
+    FOREIGN KEY (food_id) REFERENCES FoodMenu(food_id)
+);
+
+-- Laundry Service
+CREATE TABLE LaundryService (
+    laundry_id INT AUTO_INCREMENT PRIMARY KEY,
+    booking_id INT,
+    clothes_count INT,
+    amount AS (clothes_count * 20) STORED,
+    FOREIGN KEY (booking_id) REFERENCES Booking(booking_id)
+);
+
+-- Site Visit Service
+CREATE TABLE SiteVisit (
+    visit_id INT AUTO_INCREMENT PRIMARY KEY,
+    booking_id INT,
+    vehicle_type VARCHAR(30),
+    days INT,
+    rate_per_day DECIMAL(10,2),
+    total_amount AS (days * rate_per_day) STORED,
+    FOREIGN KEY (booking_id) REFERENCES Booking(booking_id)
+);
+
+
+4.Invise Managemnt
+
+CREATE TABLE Invoice (
+    invoice_id INT AUTO_INCREMENT PRIMARY KEY,
+    booking_id INT,
+    invoice_date DATE DEFAULT (CURRENT_DATE),
+    room_charge DECIMAL(10,2),
+    food_charge DECIMAL(10,2),
+    laundry_charge DECIMAL(10,2),
+    site_visit_charge DECIMAL(10,2),
+    total_amount DECIMAL(10,2),
+    FOREIGN KEY (booking_id) REFERENCES Booking(booking_id)
+);
