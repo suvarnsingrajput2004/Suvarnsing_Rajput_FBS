@@ -1,0 +1,77 @@
+MySQL Assignment -2 (DML)
+
+1. Write a SQL statement to insert a record as follows:
+Employees :
+->
+INSERT INTO employees 
+(employee_id, first_name, last_name, email, phone_number, hire_date, job_id, salary, commission_pct, manager_id, department_id) 
+VALUES
+(100, 'Steven', 'King', 'SKING', '515.123.4567', '1987-06-17', 'AD_PRES', 24000.00, 0.00, 200, 10),
+(101, 'Neena', 'Kochhar', 'NKOCHHAR', '515.123.4568', '1987-06-18', 'AD_VP', 17000.00, 0.00, 200, 10),
+(102, 'Lex', 'De Haan', 'LDEHAAN', '515.123.4569', '1987-06-19', 'AD_VP', 17000.00, 0.00, 200, 10),
+(103, 'Alexander', 'Hunold', 'AHUNOLD', '590.423.4567', '1987-06-20', 'IT_PROG', 9000.00, 0.00, 103, 60),
+(104, 'Bruce', 'Ernst', 'BERNST', '590.423.4568', '1987-06-21', 'IT_PROG', 6000.00, 0.00, 103, 60),
+(105, 'David', 'Austin', 'DAUSTIN', '590.423.4569', '1987-06-22', 'IT_PROG', 4800.00, 0.00, 103, 60),
+(106, 'Valli', 'Pataballa', 'VPATABAL', '590.423.4560', '1987-06-23', 'IT_PROG', 4800.00, 0.00, 103, 60),
+(107, 'Diana', 'Lorentz', 'DLORENTZ', '590.423.5567', '1987-06-24', 'IT_PROG', 4200.00, 0.00, 114, 30),
+(108, 'Nancy', 'Greenberg', 'NGREENBE', '515.124.4569', '1987-06-25', 'SA_MAN', 12000.00, 0.00, 145, 80),
+(109, 'Daniel', 'Faviet', 'DFAVIET', '515.124.4169', '1987-06-26', 'SA_MAN', 9000.00, 0.00, 145, 80);
+
+INSERT INTO department (department_id, department_name, manager_id, location_id)
+VALUES
+(10, 'Administration', 200, 1700),
+(20, 'Marketing', 201, 1800),
+(30, 'Purchasing', 114, 1700),
+(60, 'IT', 103, 1400),
+(80, 'Sales', 145, 2500);
+
+2. Write a SQL statement to insert 3 rows by a single insert statement.
+->
+INSERT INTO department (department_id, department_name, manager_id, location_id)
+VALUES 
+(10, 'Administration', 200, 1700),
+(20, 'Marketing', 201, 1800),
+(30, 'Purchasing', 114, 1700);
+
+3. Write a SQL statement to insert one row in jobs table to ensure that no duplicate
+value will be entered in the job_id column.
+->
+INSERT INTO jobs (job_id, job_title, min_salary, max_salary)
+VALUES
+('AD_PRES', 'President', 20000, 40000),
+('AD_VP', 'Administration Vice President', 15000, 30000),
+('IT_PROG', 'Programmer', 4000, 10000),
+('SA_MAN', 'Sales Manager', 9000, 15000),
+('IT_ANALYST', 'IT Analyst', 4000, 9000); -- new one (unique job_id)
+
+4. Write SQL statement to increment salary of each emp by 10%.
+->UPDATE employees
+SET salary = salary * 1.10;
+
+5. Write a SQL statement to change the email column of employees table with 'not
+available' for those employees whose department_id is 80 and gets a
+commission is less than .20%
+->
+UPDATE employees
+SET email = 'not available'
+WHERE department_id = 80
+  AND commission_pct < 0.20;
+
+
+6. Write a SQL statement to change the email column of employees table with 'not
+available' for those employees who belongs to the 'Purchasing' department.
+->
+UPDATE employees
+SET email = 'not available'
+WHERE department_id = (
+    SELECT department_id 
+    FROM department
+    WHERE department_name = 'Purchasing'
+);
+
+7. Write a SQL statement to change the email and commission_pct column of
+employees table with 'not available' and 0.10 for all employees.
+->
+UPDATE employees
+SET email = 'not available',
+    commission_pct = 0.10;
